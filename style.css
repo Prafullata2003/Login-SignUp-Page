@@ -1,0 +1,710 @@
+/* =============================================
+   AUTH PAGE — STYLE.CSS
+   Premium glassmorphism design with animations
+   Author: AuthFlow UI
+============================================= */
+
+/* ——————————————————————————————————————————
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+—————————————————————————————————————————— */
+:root {
+  /* Color palette */
+  --clr-bg-start:       hsl(240, 30%, 8%);
+  --clr-bg-end:         hsl(260, 35%, 12%);
+  --clr-orb-1:          hsl(270, 80%, 55%);
+  --clr-orb-2:          hsl(210, 90%, 55%);
+  --clr-orb-3:          hsl(300, 70%, 50%);
+
+  --clr-card-bg:        rgba(255, 255, 255, 0.05);
+  --clr-card-border:    rgba(255, 255, 255, 0.12);
+
+  --clr-primary:        hsl(252, 100%, 70%);
+  --clr-primary-hover:  hsl(252, 100%, 62%);
+  --clr-primary-glow:   hsla(252, 100%, 70%, 0.35);
+
+  --clr-text:           hsl(220, 20%, 95%);
+  --clr-text-muted:     hsl(220, 15%, 60%);
+  --clr-label:          hsl(220, 20%, 80%);
+
+  --clr-input-bg:       rgba(255, 255, 255, 0.07);
+  --clr-input-border:   rgba(255, 255, 255, 0.15);
+  --clr-input-focus:    hsl(252, 100%, 70%);
+
+  --clr-error:          hsl(0, 80%, 65%);
+  --clr-error-bg:       hsla(0, 80%, 65%, 0.1);
+  --clr-success:        hsl(145, 70%, 55%);
+  --clr-success-bg:     hsla(145, 70%, 55%, 0.12);
+
+  /* Typography */
+  --font-main:          'Inter', sans-serif;
+
+  /* Spacing */
+  --radius-card:        24px;
+  --radius-input:       12px;
+  --radius-btn:         12px;
+
+  /* Transitions */
+  --tr-fast:            150ms ease;
+  --tr-normal:          250ms ease;
+  --tr-slow:            400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ——————————————————————————————————————————
+   2. RESET & BASE STYLES
+—————————————————————————————————————————— */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 15px;
+  color: var(--clr-text);
+  background: linear-gradient(135deg, var(--clr-bg-start) 0%, var(--clr-bg-end) 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  line-height: 1.6;
+}
+
+/* ——————————————————————————————————————————
+   3. ANIMATED BACKGROUND ORBS
+—————————————————————————————————————————— */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: orbFloat 12s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--clr-orb-1);
+  top: -150px;
+  left: -150px;
+  animation-duration: 14s;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--clr-orb-2);
+  bottom: -100px;
+  right: -100px;
+  animation-duration: 10s;
+  animation-delay: -3s;
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: var(--clr-orb-3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 16s;
+  animation-delay: -6s;
+}
+
+@keyframes orbFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 40px) scale(1.1); }
+}
+
+/* ——————————————————————————————————————————
+   4. AUTH WRAPPER & CARD
+—————————————————————————————————————————— */
+.auth-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--clr-card-bg);
+  border: 1px solid var(--clr-card-border);
+  border-radius: var(--radius-card);
+  padding: 40px 36px 36px;
+
+  /* Glassmorphism effect */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+
+  /* Subtle shadow for depth */
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  /* Entrance animation */
+  animation: cardEntrance 0.6s var(--tr-slow) both;
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ——————————————————————————————————————————
+   5. BRAND / LOGO SECTION
+—————————————————————————————————————————— */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--clr-primary), hsl(210, 90%, 60%));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px var(--clr-primary-glow);
+}
+
+.brand-icon svg {
+  width: 22px;
+  height: 22px;
+  color: #fff;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #fff 30%, var(--clr-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ——————————————————————————————————————————
+   6. TAB SWITCHER
+—————————————————————————————————————————— */
+.tab-switcher {
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--clr-card-border);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 28px;
+  gap: 4px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: var(--clr-text-muted);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 9px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: color var(--tr-normal);
+}
+
+/* Active tab text colour */
+.tab-btn.active {
+  color: var(--clr-text);
+  font-weight: 600;
+}
+
+/* Sliding background pill */
+.tab-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 6px);
+  height: calc(100% - 8px);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform var(--tr-slow);
+  pointer-events: none;
+}
+.auth-card {
+  max-height: 95vh;
+  padding: 20px 18px; /* kami padding */
+}
+
+/* Move indicator to right when signup is active */
+.tab-indicator.right {
+  transform: translateX(calc(100% + 4px));
+}
+
+/* ——————————————————————————————————————————
+   7. FORM SUBTITLE
+—————————————————————————————————————————— */
+.form-subtitle {
+  color: var(--clr-text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+}
+
+/* ——————————————————————————————————————————
+   8. FORM TOGGLE ANIMATION
+—————————————————————————————————————————— */
+.auth-form {
+  display: none;
+  flex-direction: column;
+
+.auth-form.active {
+  display: block;
+}
+
+  /* Slide-in animation when becoming visible */
+  animation: formSlideIn 0.3s var(--tr-slow) both;
+}
+
+.auth-form.active {
+  display: flex;
+}
+
+@keyframes formSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ——————————————————————————————————————————
+   9. INPUT GROUPS
+—————————————————————————————————————————— */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--clr-label);
+  letter-spacing: 0.3px;
+}
+
+/* .forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+  margin-bottom: 10px;
+} */
+
+.forgot-link {
+    font-size: 0.8rem;
+    color: var(--clr-primary);
+    text-decoration: none;
+    transition: opacity var(--tr-fast);
+    padding: 12px;
+    margin-bottom: 1px;
+}
+
+/* Wrapper holds icon + input + eye button */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Left icon styling */
+.input-icon {
+  position: absolute;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  color: var(--clr-text-muted);
+  pointer-events: none;
+  transition: color var(--tr-normal);
+}
+
+.input-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Text / email / password inputs */
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 44px 12px 42px;
+  background: var(--clr-input-bg);
+  border: 1px solid var(--clr-input-border);
+  border-radius: var(--radius-input);
+  color: var(--clr-text);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color var(--tr-normal),
+    background var(--tr-normal),
+    box-shadow var(--tr-normal);
+}
+
+/* Placeholder styling */
+.input-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Focus state */
+.input-wrapper input:focus {
+  border-color: var(--clr-input-focus);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 3px var(--clr-primary-glow);
+}
+
+/* Icon turns accent colour when input is focused */
+.input-wrapper input:focus ~ .input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: var(--clr-primary);
+}
+
+/* Error state on the input wrapper */
+.input-group.has-error .input-wrapper input {
+  border-color: var(--clr-error);
+  background: var(--clr-error-bg);
+}
+
+/* Eye toggle button */
+.eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--clr-text-muted);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: color var(--tr-normal);
+}
+
+.eye-btn:hover  { color: var(--clr-text); }
+.eye-btn:focus-visible {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 2px;
+}
+
+.eye-icon { width: 16px; height: 16px; }
+
+/* ——————————————————————————————————————————
+   10. INLINE ERROR MESSAGES
+—————————————————————————————————————————— */
+.error-msg {
+  font-size: 0.78rem;
+  color: var(--clr-error);
+  display: none; /* shown by JS when needed */
+  align-items: center;
+  gap: 4px;
+  min-height: 18px;
+}
+
+.input-group.has-error .error-msg {
+  display: flex;
+}
+
+/* ——————————————————————————————————————————
+   11. FORGOT PASSWORD LINK
+—————————————————————————————————————————— */
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -8px;
+}
+
+.forgot-link {
+  font-size: 0.8rem;
+  color: var(--clr-primary);
+  text-decoration: none;
+  transition: opacity var(--tr-fast);
+}
+
+.forgot-link:hover { opacity: 0.75; }
+
+/* ——————————————————————————————————————————
+   12. PASSWORD STRENGTH METER
+—————————————————————————————————————————— */
+.strength-meter {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.strength-label {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+  min-height: 16px;
+  display: block;
+}
+
+/* ——————————————————————————————————————————
+   13. CHECKBOX (Terms & Conditions)
+—————————————————————————————————————————— */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--clr-text-muted);
+  line-height: 1.5;
+}
+
+/* Hide native checkbox */
+.checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Custom checkbox box */
+.checkbox-custom {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--clr-input-border);
+  border-radius: 5px;
+  background: var(--clr-input-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: border-color var(--tr-normal), background var(--tr-normal);
+}
+
+/* Checked state: shows tick via pseudo-element */
+.checkbox-label input:checked + .checkbox-custom {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+}
+
+.checkbox-label input:checked + .checkbox-custom::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 8px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/* Focus ring for accessibility */
+.checkbox-label input:focus-visible + .checkbox-custom {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 2px;
+}
+
+.inline-link {
+  color: var(--clr-primary);
+  text-decoration: none;
+}
+.inline-link:hover { text-decoration: underline; }
+
+/* ——————————————————————————————————————————
+   14. SUBMIT BUTTON
+—————————————————————————————————————————— */
+.submit-btn {
+  position: relative;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--clr-primary), hsl(210, 90%, 58%));
+  border: none;
+  border-radius: var(--radius-btn);
+  color: #fff;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 4px;
+  letter-spacing: 0.3px;
+
+  box-shadow:
+    0 4px 20px var(--clr-primary-glow),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+
+  transition:
+    transform var(--tr-normal),
+    box-shadow var(--tr-normal),
+    opacity var(--tr-normal);
+}
+
+/* Shine sweep on hover */
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.submit-btn:hover::before { left: 150%; }
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px var(--clr-primary-glow);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner inside button (shown during async loading) */
+.btn-loader {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.submit-btn.loading .btn-text  { visibility: hidden; }
+.submit-btn.loading .btn-loader { display: block; }
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ——————————————————————————————————————————
+   15. SUCCESS BANNER
+—————————————————————————————————————————— */
+.success-banner {
+  display: none;               /* toggled by JS */
+  align-items: center;
+  gap: 10px;
+  background: var(--clr-success-bg);
+  border: 1px solid var(--clr-success);
+  color: var(--clr-success);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: bannerIn 0.3s ease both;
+}
+
+.success-banner svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+@keyframes bannerIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ——————————————————————————————————————————
+   16. SWITCH PROMPT (bottom link)
+—————————————————————————————————————————— */
+.switch-prompt {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--clr-text-muted);
+}
+
+.switch-link {
+  background: none;
+  border: none;
+  color: var(--clr-primary);
+  font-size: 0.82rem;
+  font-family: var(--font-main);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity var(--tr-fast);
+}
+
+.switch-link:hover { opacity: 0.75; text-decoration: underline; }
+
+/* ——————————————————————————————————————————
+   17. RESPONSIVE — Mobile-friendly tweaks
+—————————————————————————————————————————— */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 32px 24px 28px;
+    border-radius: 20px;
+  }
+
+  .brand-name { font-size: 1.3rem; }
+}

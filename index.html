@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Login and Signup page for Technical Round Evaluation" />
+    <title>AuthFlow — Login & Signup</title>
+
+    <!-- Google Fonts: Inter for clean, modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!-- =============================================
+         BACKGROUND: Animated gradient orbs
+    ============================================= -->
+    <div class="bg-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <!-- =============================================
+         MAIN AUTH CARD
+    ============================================= -->
+    <main class="auth-wrapper" role="main">
+      <div class="auth-card" id="authCard">
+
+        <!-- Brand Logo / Header -->
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h1 class="brand-name">AuthFlow</h1>
+        </div>
+
+        <!-- Tab Toggle: Login / Signup -->
+        <div class="tab-switcher" role="tablist" aria-label="Authentication tabs">
+          <button
+            class="tab-btn active"
+            id="loginTabBtn"
+            role="tab"
+            aria-selected="true"
+            aria-controls="loginForm"
+            onclick="switchTab('login')"
+          >
+            Login
+          </button>
+          <button
+            class="tab-btn"
+            id="signupTabBtn"
+            role="tab"
+            aria-selected="false"
+            aria-controls="signupForm"
+            onclick="switchTab('signup')"
+          >
+            Sign Up
+          </button>
+          <!-- Sliding indicator under the active tab -->
+          <div class="tab-indicator" id="tabIndicator" aria-hidden="true"></div>
+        </div>
+
+        <!-- =========================================
+             LOGIN FORM
+        ========================================= -->
+        <form
+          class="auth-form active"
+          id="loginForm"
+          role="tabpanel"
+          aria-labelledby="loginTabBtn"
+          novalidate
+          onsubmit="handleLogin(event)"
+        >
+          <p class="form-subtitle">Welcome back! Please sign in to continue.</p>
+
+          <!-- Email Field -->
+          <div class="input-group" id="login-email-group">
+            <label for="loginEmail" class="input-label">Email Address</label>
+            <div class="input-wrapper">
+              <!-- Email icon -->
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </span>
+              <input
+                type="email"
+                id="loginEmail"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                aria-describedby="login-email-error"
+                aria-required="true"
+              />
+            </div>
+            <!-- Inline validation error message -->
+            <span class="error-msg" id="login-email-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Password Field -->
+          <div class="input-group" id="login-password-group">
+            <label for="loginPassword" class="input-label">Password</label>
+            <div class="input-wrapper">
+              <!-- Lock icon -->
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                type="password"
+                id="loginPassword"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                aria-describedby="login-password-error"
+                aria-required="true"
+              />
+              <!-- Toggle password visibility -->
+              <button type="button" class="eye-btn" onclick="togglePassword('loginPassword', this)" aria-label="Show password">
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <span class="error-msg" id="login-password-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Forgot password link -->
+          <div class="forgot-row">
+            <a href="#" class="forgot-link" onclick="return false;">Forgot password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="submit-btn" id="loginSubmitBtn">
+            <span class="btn-text">Sign In</span>
+            <span class="btn-loader" aria-hidden="true"></span>
+          </button>
+
+          <!-- Success message (hidden by default) -->
+          <div class="success-banner" id="loginSuccess" role="alert" aria-live="polite" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            Login successful! Redirecting…
+          </div>
+
+          <!-- Switch to Signup -->
+          <p class="switch-prompt">
+            Don't have an account?
+            <button type="button" class="switch-link" onclick="switchTab('signup')">Create one</button>
+          </p>
+        </form>
+
+        <!-- =========================================
+             SIGNUP FORM
+        ========================================= -->
+        <form
+          class="auth-form"
+          id="signupForm"
+          role="tabpanel"
+          aria-labelledby="signupTabBtn"
+          novalidate
+          onsubmit="handleSignup(event)"
+        >
+          <p class="form-subtitle">Create your account — it's free!</p>
+
+          <!-- Full Name Field -->
+          <div class="input-group" id="signup-name-group">
+            <label for="signupName" class="input-label">Full Name</label>
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
+              </span>
+              <input
+                type="text"
+                id="signupName"
+                name="name"
+                placeholder="John Doe"
+                autocomplete="name"
+                aria-describedby="signup-name-error"
+                aria-required="true"
+              />
+            </div>
+            <span class="error-msg" id="signup-name-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Email Field -->
+          <div class="input-group" id="signup-email-group">
+            <label for="signupEmail" class="input-label">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </span>
+              <input
+                type="email"
+                id="signupEmail"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                aria-describedby="signup-email-error"
+                aria-required="true"
+              />
+            </div>
+            <span class="error-msg" id="signup-email-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Password Field -->
+          <div class="input-group" id="signup-password-group">
+            <label for="signupPassword" class="input-label">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                type="password"
+                id="signupPassword"
+                name="password"
+                placeholder="Min 8 chars, 1 number"
+                autocomplete="new-password"
+                aria-describedby="signup-password-error signup-password-strength"
+                aria-required="true"
+                oninput="updatePasswordStrength(this.value)"
+              />
+              <button type="button" class="eye-btn" onclick="togglePassword('signupPassword', this)" aria-label="Show password">
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Visual password strength meter -->
+            <div class="strength-meter" id="signup-password-strength" aria-label="Password strength">
+              <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <span class="strength-label" id="strengthLabel"></span>
+            <span class="error-msg" id="signup-password-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="input-group" id="signup-confirm-group">
+            <label for="signupConfirm" class="input-label">Confirm Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 12l2 2 4-4"/>
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input
+                type="password"
+                id="signupConfirm"
+                name="confirmPassword"
+                placeholder="Re-enter password"
+                autocomplete="new-password"
+                aria-describedby="signup-confirm-error"
+                aria-required="true"
+              />
+              <button type="button" class="eye-btn" onclick="togglePassword('signupConfirm', this)" aria-label="Show confirm password">
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <span class="error-msg" id="signup-confirm-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Terms & Conditions checkbox -->
+          <div class="checkbox-group">
+            <label class="checkbox-label" for="agreeTerms">
+              <input type="checkbox" id="agreeTerms" name="agreeTerms" aria-describedby="signup-terms-error" />
+              <span class="checkbox-custom" aria-hidden="true"></span>
+              I agree to the <a href="#" class="inline-link" onclick="return false;">Terms of Service</a> &amp; <a href="#" class="inline-link" onclick="return false;">Privacy Policy</a>
+            </label>
+            <span class="error-msg" id="signup-terms-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="submit-btn" id="signupSubmitBtn">
+            <span class="btn-text">Create Account</span>
+            <span class="btn-loader" aria-hidden="true"></span>
+          </button>
+
+          <!-- Success message (hidden by default) -->
+          <div class="success-banner" id="signupSuccess" role="alert" aria-live="polite" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            Account created! Welcome aboard 🎉
+          </div>
+
+          <!-- Switch to Login -->
+          <p class="switch-prompt">
+            Already have an account?
+            <button type="button" class="switch-link" onclick="switchTab('login')">Sign in</button>
+          </p>
+        </form>
+
+      </div><!-- /.auth-card -->
+    </main>
+
+    <!-- External Script -->
+    <script src="script.js"></script>
+  </body>
+</html>
